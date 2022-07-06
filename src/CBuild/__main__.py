@@ -38,7 +38,7 @@ def read_config() -> CBuildConfiguration:
 
 
 def build_command(config: CBuildConfiguration) -> str:
-    command = f"{config.compiler_path} -Wall -Wextra -I. {'-O3' if config.release_mode else '-g '}"
+    command = f"{config.compiler_path} -Wall -Wextra -I. {'-O3 ' if config.release_mode else '-g '}"
 
     for incdir in config.include_dirs:
         command += f"-I {incdir}"
