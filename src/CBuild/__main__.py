@@ -10,7 +10,6 @@ class CBuildConfiguration:
 
         self.source_dirs   = self._dir_config["source"]
         self.include_dirs  = self._dir_config["include"]
-        self.obj_dir       = self._dir_config["objects"]
         self.out_dir       = self._dir_config["output"]
 
         self.project_name  = self._build_config["name"]
