@@ -9,6 +9,7 @@ authors = [
   { name="Alessandro Salerno" },
 ]
 description = "A simple build system for C Projects"
+license = { file="LICENSE" }
 readme = "README.md"
 requires-python = ">=3.7"
 classifiers = [
