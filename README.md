@@ -46,3 +46,8 @@ CBuild is structured as a Python Package, as such, it needs to be installed via 
 * **name:** The project's name (Used as name for the final binary)
 * **release:** Wether the project should be built in release mode or not
 * **format:** Unused for now
+
+
+<div align="center">
+    <img src=".github/Example.PNG">
+</div>
