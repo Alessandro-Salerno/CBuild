@@ -119,7 +119,7 @@ def main(argv: list) -> int:
         return 0
 
     # Simple command
-    if len(argv) == 2 and hasattr(CBuildCommandlineTools, str(argv[1]).replace("--", "")):
+    if len(argv) >= 2 and hasattr(CBuildCommandlineTools, str(argv[1]).replace("--", "")):
         getattr(CBuildCommandlineTools, str(argv[1]).replace("--", ""))(*argv[2:])
         return 0
 
