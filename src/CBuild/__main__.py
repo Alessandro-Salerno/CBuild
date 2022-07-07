@@ -38,14 +38,15 @@ class CBuildConfiguration:
 
     
     def build_command(self) -> str:
-        command = f"{self.compiler_path} -Wall -Wextra -I. {'-O3 ' if self.release_mode else '-g '}"
+        command = f"{self.compiler_path} -Wall -Wextra -lm -I. {'-O3 ' if self.release_mode else '-g '}"
 
         for incdir in self.include_dirs:
             command += f"-I {incdir} "
 
         for srcdir in self.source_dirs:
             files    = [os.path.join(dp, f) for dp, dn, filenames in os.walk(srcdir) for f in filenames if os.path.splitext(f)[1] == self.file_extension]
-            command += ' '.join(files)
+            for file in files:
+                command += f"{file} "
 
         command += f" -o {self.out_dir}/{self.project_name}"
         return command
