@@ -51,10 +51,24 @@ def build_command(config: CBuildConfiguration) -> str:
     return command
 
 
+def check_folders(config: CBuildConfiguration):
+    for incdir in config.include_dirs:
+        if not os.path.exists(incdir):
+            raise CBuildConfigurationException(f"No such directory '{incdir}'. Required as include path.")
+
+    for srcdir in config.source_dirs:
+        if not os.path.exists(srcdir):
+            raise CBuildConfigurationException(f"No such directory '{srcdir}'. Required as source directory.")
+
+    if not os.path.exists(config.out_dir):
+        os.mkdir(config.out_dir)
+
+
 def main(argv: list) -> int:
     # Build
     if len(argv) == 1:
         config = read_config()
+        check_folders(config)
         os.system(build_command(config))
         return 0
     
