@@ -51,6 +51,52 @@ class CBuildConfiguration:
         return command
 
 
+class CBuildCommandlineTools:
+    @staticmethod
+    def setup():
+        os.mkdir("src")
+        os.mkdir("include")
+        
+        with open("./CBuild.json", "w") as file:
+            file.write("""{
+    "directories": {
+        "source":  [ "src" ],
+        "include": [ "include" ],
+        "output":  "dist"
+    },
+
+    "build": {
+        "compiler":       "gcc",
+        "file extension": ".c",
+        "name":           "Example",
+        "release":        true,
+        "format":         "exec"
+    }
+}
+""")
+
+        with open("./src/main.c", "w") as file:
+            file.write("""#include <stdio.h>
+
+
+int main() {
+    printf("Hello, world!\\n");
+    return 0;
+}
+""")
+
+
+    @staticmethod
+    def help():
+        print(
+            f"""{'py' if os.name == 'nt' else 'python3'} -m cbuild [ options ]
+
+OPTIONS:
+    --help  | Shows this menu
+    --setup | Creates a basic CBuild project in the working directory
+""")
+
+
 def read_config() -> CBuildConfiguration:
     try:
         with open("./CBuild.json", "r") as config_file:
@@ -71,7 +117,13 @@ def main(argv: list) -> int:
         config.check_folders()
         os.system(config.build_command())
         return 0
-    
+
+    # Simple command
+    if len(argv) == 2 and hasattr(CBuildCommandlineTools, str(argv[1]).replace("--", "")):
+        getattr(CBuildCommandlineTools, str(argv[1]).replace("--", ""))(*argv[2:])
+        return 0
+
+    print(f"ERROR: Unrecognized options {' '.join(argv[1:])}")
     return -1
 
 
