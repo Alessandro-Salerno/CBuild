@@ -3,6 +3,10 @@ import sys
 import os
 
 
+class CBuildConfigurationException(Exception):
+    pass
+
+
 class CBuildConfiguration:
     def __init__(self, config: dict):
         self._config        = config
@@ -45,10 +49,6 @@ class CBuildConfiguration:
 
         command += f" -o {self.out_dir}/{self.project_name}"
         return command
-
-
-class CBuildConfigurationException(Exception):
-    pass
 
 
 def read_config() -> CBuildConfiguration:
