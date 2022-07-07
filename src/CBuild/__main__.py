@@ -44,11 +44,10 @@ def build_command(config: CBuildConfiguration) -> str:
         command += f"-I {incdir} "
 
     for srcdir in config.source_dirs:
-        files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(srcdir) for f in filenames if os.path.splitext(f)[1] == config.file_extension]
-        for file in files:
-            command += f"{file} "
+        files    = [os.path.join(dp, f) for dp, dn, filenames in os.walk(srcdir) for f in filenames if os.path.splitext(f)[1] == config.file_extension]
+        command += ' '.join(files)
 
-    command += f"-o {config.out_dir}/{config.project_name}"
+    command += f" -o {config.out_dir}/{config.project_name}"
     return command
 
 
