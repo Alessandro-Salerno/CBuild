@@ -20,6 +20,33 @@ class CBuildConfiguration:
         self.output_format  = self._build_config["format"]
 
 
+    def check_folders(self):
+        for incdir in self.include_dirs:
+            if not os.path.exists(incdir):
+                raise CBuildConfigurationException(f"No such directory '{incdir}'. Required as include path.")
+
+        for srcdir in self.source_dirs:
+            if not os.path.exists(srcdir):
+                raise CBuildConfigurationException(f"No such directory '{srcdir}'. Required as source directory.")
+
+        if not os.path.exists(self.out_dir):
+            os.mkdir(self.out_dir)
+
+    
+    def build_command(self) -> str:
+        command = f"{self.compiler_path} -Wall -Wextra -I. {'-O3 ' if self.release_mode else '-g '}"
+
+        for incdir in self.include_dirs:
+            command += f"-I {incdir} "
+
+        for srcdir in self.source_dirs:
+            files    = [os.path.join(dp, f) for dp, dn, filenames in os.walk(srcdir) for f in filenames if os.path.splitext(f)[1] == self.file_extension]
+            command += ' '.join(files)
+
+        command += f" -o {self.out_dir}/{self.project_name}"
+        return command
+
+
 class CBuildConfigurationException(Exception):
     pass
 
@@ -37,39 +64,12 @@ def read_config() -> CBuildConfiguration:
         raise e
 
 
-def build_command(config: CBuildConfiguration) -> str:
-    command = f"{config.compiler_path} -Wall -Wextra -I. {'-O3 ' if config.release_mode else '-g '}"
-
-    for incdir in config.include_dirs:
-        command += f"-I {incdir} "
-
-    for srcdir in config.source_dirs:
-        files    = [os.path.join(dp, f) for dp, dn, filenames in os.walk(srcdir) for f in filenames if os.path.splitext(f)[1] == config.file_extension]
-        command += ' '.join(files)
-
-    command += f" -o {config.out_dir}/{config.project_name}"
-    return command
-
-
-def check_folders(config: CBuildConfiguration):
-    for incdir in config.include_dirs:
-        if not os.path.exists(incdir):
-            raise CBuildConfigurationException(f"No such directory '{incdir}'. Required as include path.")
-
-    for srcdir in config.source_dirs:
-        if not os.path.exists(srcdir):
-            raise CBuildConfigurationException(f"No such directory '{srcdir}'. Required as source directory.")
-
-    if not os.path.exists(config.out_dir):
-        os.mkdir(config.out_dir)
-
-
 def main(argv: list) -> int:
     # Build
     if len(argv) == 1:
         config = read_config()
-        check_folders(config)
-        os.system(build_command(config))
+        config.check_folders()
+        os.system(config.build_command())
         return 0
     
     return -1
