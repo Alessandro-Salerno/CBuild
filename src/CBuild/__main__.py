@@ -41,7 +41,7 @@ def build_command(config: CBuildConfiguration) -> str:
     command = f"{config.compiler_path} -Wall -Wextra -I. {'-O3 ' if config.release_mode else '-g '}"
 
     for incdir in config.include_dirs:
-        command += f"-I {incdir}"
+        command += f"-I {incdir} "
 
     for srcdir in config.source_dirs:
         files = [os.path.join(dp, f) for dp, dn, filenames in os.walk(srcdir) for f in filenames if os.path.splitext(f)[1] == config.file_extension]
