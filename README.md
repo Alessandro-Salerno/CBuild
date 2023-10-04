@@ -15,7 +15,11 @@ pip3 install git+https://github.com/Alessandro-Salerno/CBuild
 ```
 
 ## Using CBuild in a C Project
-* Create a file named `CBuild.json` in your project's main directory
+* Create a file named `CBuild.json` in your project's main directory using the following command:
+```
+<your python> -m cbuild --setup
+```
+The output file should look something like this:
 ```json
 {
     "directories": {
