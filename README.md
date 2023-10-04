@@ -4,15 +4,15 @@ CBuild is a work-in-progress small and simple build system meant for smaller C P
 ## Project Structure
 CBuild is structured as a Python Package, as such, it needs to be installed via the pip package manager.
 
-## Building CBuild
-### Requirements
-* Python 3.7 or newer
-* The Python `build` module
-* The `hatchling` backend
-### Procedure
-* Clone this repository
-* Run the `build` module via Python (`python3 -m build` on macOS/Linux, `py -m build`  on Windows)
-* Install CBuild using `pip` and the `.whl` in the `dist` directory
+## Installing CBuild
+* Windows:
+```
+pip install git+https://github.com/Alessandro-Salerno/CBuild
+```
+* macOS/Linux:
+```
+pip3 install git+https://github.com/Alessandro-Salerno/CBuild
+```
 
 ## Using CBuild in a C Project
 * Create a file named `CBuild.json` in your project's main directory
@@ -34,6 +34,16 @@ CBuild is structured as a Python Package, as such, it needs to be installed via 
 }
 ```
 * Run CBuild via Python (`python3 -m cbuild` on macOS/Linux, `py -m cbuild` on Windows)
+
+## Building CBuild
+### Requirements
+* Python 3.7 or newer
+* The Python `build` module
+* The `hatchling` backend
+### Procedure
+* Clone this repository
+* Run the `build` module via Python (`python3 -m build` on macOS/Linux, `py -m build`  on Windows)
+* Install CBuild using `pip` and the `.whl` in the `dist` directory
 
 ## Structure of `CBuild.json`
 ### directories
