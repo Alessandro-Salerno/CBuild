@@ -1,5 +1,5 @@
 # CBuild
-CBuild is a work-in-progress small and simple build system meant for smaller C Projects.
+CBuild is a small and simple build system for tiny C Projects.
 
 ## Project Structure
 CBuild is structured as a Python Package, as such, it needs to be installed via the pip package manager.
@@ -65,3 +65,4 @@ The output file should look something like this:
 <div align="center">
     <img src=".github/Example.PNG">
 </div>
+
